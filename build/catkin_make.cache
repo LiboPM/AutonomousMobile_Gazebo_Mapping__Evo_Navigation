@@ -1,0 +1,2 @@
+costmap_prohibition_layer:interactive_tools:jackal_description:master/velodyne_description:master/velodyne_gazebo_plugins:master/velodyne_simulator:me5413_world:teb_local_planner
+-DCATKIN_DEVEL_PREFIX=/home/libo/ME5413_Final_Project/devel -DCMAKE_INSTALL_PREFIX=/home/libo/ME5413_Final_Project/install -G Unix Makefiles
