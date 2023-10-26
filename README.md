@@ -221,9 +221,13 @@ roscd me5413_world/maps/
 rosrun map_server map_saver -f my_map map:=/map
 ```
 
-<img src="src/me5413_world/media/rviz_mapping.png" alt="rviz_nmapping_image" width="400" /> <img src="src/me5413_world/media/19_Final_Project_Map.png" alt="rviz_nmapping_image" width="400" />
+
 <img src="src/me5413_world/media/rviz_mapping.png" alt="rviz_nmapping_image" height="400" /> <img src="src/me5413_world/media/19_Final_Project_Map.png" alt="rviz_nmapping_image" height="400" />
 
+by the way you can obtain the global map by 3D Lidar SLAM like below and also a corresponding .yaml file， rename both as my_map and put them into `src/me5413_world/maps/`
+
+
+![map](src/me5413_world/media/map.png)
 
 ### 3. Navigation
 
