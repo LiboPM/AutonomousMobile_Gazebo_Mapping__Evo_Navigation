@@ -91,6 +91,94 @@ There are two sources of models needed:
   # Copy the customized models into the `~/.gazebo/models` directory
   cp -r ~/ME5413_Final_Project/src/me5413_world/models/* ~/.gazebo/models
   ```
+  ### 2.1 Install Cartographer
+
+First, we need to install the wstool and rosdep in order to built Cartographer ROS, and install Ninja for faster builds.
+On Ubuntu Focal with ROS Noetic use these commands to install the above tools:
+
+```
+sudo apt-get update
+sudo apt-get install -y python3-wstool python3-rosdep ninja-build stow
+```
+
+After the tools are installed, create a new cartographer_ros workspace in ‘cartographer_ws’:
+
+```
+mkdir cartographer_ws //create a new folder named cartographer_ws
+cd cartographer_ws
+wstool init
+wstool merge -t src https://raw.githubusercontent.com/cartographer-project/cartographer_ros/master/cartographer_ros.rosinstall
+wstool update -t src
+```
+
+Now you need to install cartographer_ros’ dependencies. First, we use rosdep to install the required packages. 
+The command ‘sudo rosdep init’ will print an error if you have already executed it since installing ROS. This error can be ignored.
+If the command ‘rosdep install –from-paths src –ignore-src –rosdistro=${ROS_DISTRO} -y’ print the error: ‘
+you can delete the line 46 of package.xml: ‘<depend>libabsl-dev</depend>’, the file is in ‘~/cartographer_ws/src/cartographer/’.
+```
+sudo rosdep init
+rosdep update
+rosdep install –from-paths src –ignore-src –rosdistro=${ROS_DISTRO} -y
+```
+
+Cartographer uses the abseil-cpp library that needs to be manually installed using this script:
+```
+src/cartographer/scripts/install_abseil.sh
+```
+
+Build and Install:
+```
+catkin_make_isolated –install –use-ninja
+```
+
+Now that **Cartographer and Cartographer’s ROS integration** are installed. When you want to run cartographer_ros, you might need to source your ROS environment by running source install_isolated/setup.bash first (replace bash with zsh if your shell is zsh).
+
+### 2.2 Install teb_local_planner
+
+First, we need to install the dependency:
+```
+rosdep install teb_local_planner
+```
+
+Then, we install the teb_local_planner ROS Package from the github:
+```
+git clone https://github.com/rst-tu-dortmund/teb_local_planner.git
+```
+
+After installing the package, you can move the folder into the ‘ME5413_Final_Project/src’, ‘ME5413_Final_Project’ is the ROS work space of this solution.
+
+Build and Install:
+```
+catkin_make -DCATKIN_WHITELIST_PACKAGES=’teb_local_planner’
+```
+
+In the end, you can check the plugin of teb_local_planner compiled completely whether or not. Hope you can find the teb_local_planner!
+```
+source devel/setup.bash // In the ME5413_Final_Project
+rospack plugins –attrib=plugin nav_core
+```
+
+### 2.3 Install Costmap_Prohibition_Layer
+
+For the ME5413_Final_Project, there are some areas which cannot be accessible or be detected by the optics sensor: the operation room and the glass wall(transparent). For these areas, we create an additional costmap to help the global planner while navigation.
+
+First, we can install a plugin from http://github.com/rst-tu-dortmund/costmap_prohibition_layer :
+```
+git clone https://github.com/rst-tu-dortmund/teb_local_planner.git
+```
+
+After installing the package, you can move the folder into the ‘ME5413_Final_Project/src’, ‘ME5413_Final_Project’ is the ROS work space of this solution. And built the situation:
+```
+catkin_make // In the ME5413_Final_Project 
+```
+
+In the end, you can check the plugin of Costmap_Prohibition_Layer compiled completely whether or not. If you can find the Costmap_Prohibition_Layer, CONGRATULATION!
+```
+source devel/setup.bash // In the ME5413_Final_Project
+rospack plugins –attrib=plugin costmap_2d
+```
+
+If you have installed all of the tools, you can go to the next step: Usage. 
 
 ## Usage
 
@@ -152,13 +240,49 @@ roslaunch me5413_world navigation.launch
 
 ### 1. Map the environment
 
-* You may use any SLAM algorithm you like, any type:
-  * 2D LiDAR
-  * 3D LiDAR
-  * Vision
-  * Multi-sensor
-* Verify your SLAM accuracy by comparing your odometry with the published `/gazebo/ground_truth/state` topic (`nav_msgs::Odometry`), which contains the gournd truth odometry of the robot.
-* You may want to use tools like [EVO](https://github.com/MichaelGrupp/evo) to quantitatively evaluate the performance of your SLAM algorithm.
+#### 1.1 Install Cartographer
+
+First, we need to install the wstool and rosdep in order to built Cartographer ROS, and install Ninja for faster builds.
+On Ubuntu Focal with ROS Noetic use these commands to install the above tools:
+
+```
+sudo apt-get update
+sudo apt-get install -y python3-wstool python3-rosdep ninja-build stow
+```
+
+After the tools are installed, create a new cartographer_ros workspace in ‘cartographer_ws’:
+
+```
+mkdir cartographer_ws //create a new folder named cartographer_ws
+cd cartographer_ws
+wstool init
+wstool merge -t src https://raw.githubusercontent.com/cartographer-project/cartographer_ros/master/cartographer_ros.rosinstall
+wstool update -t src
+```
+
+Now you need to install cartographer_ros’ dependencies. First, we use rosdep to install the required packages. 
+The command ‘sudo rosdep init’ will print an error if you have already executed it since installing ROS. This error can be ignored.
+If the command ‘rosdep install –from-paths src –ignore-src –rosdistro=${ROS_DISTRO} -y’ print the error: ‘
+you can delete the line 46 of package.xml: ‘<depend>libabsl-dev</depend>’, the file is in ‘~/cartographer_ws/src/cartographer/’.
+```
+sudo rosdep init
+rosdep update
+rosdep install –from-paths src –ignore-src –rosdistro=${ROS_DISTRO} -y
+```
+
+Cartographer uses the abseil-cpp library that needs to be manually installed using this script:
+```
+src/cartographer/scripts/install_abseil.sh
+```
+
+Build and Install:
+```
+catkin_make_isolated –install –use-ninja
+```
+
+Now that **Cartographer and Cartographer’s ROS integration** are installed. When you want to run cartographer_ros, you might need to source your ROS environment by running source install_isolated/setup.bash first (replace bash with zsh if your shell is zsh).
+
+
 
 ### 2. Using your own map, navigate your robot
 
