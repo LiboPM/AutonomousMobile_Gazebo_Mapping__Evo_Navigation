@@ -91,7 +91,7 @@ There are two sources of models needed:
   # Copy the customized models into the `~/.gazebo/models` directory
   cp -r ~/ME5413_Final_Project/src/me5413_world/models/* ~/.gazebo/models
   ```
-  ### 2.1 Install Cartographer
+  ### Install Cartographer
 
 First, we need to install the wstool and rosdep in order to built Cartographer ROS, and install Ninja for faster builds.
 On Ubuntu Focal with ROS Noetic use these commands to install the above tools:
@@ -158,7 +158,7 @@ source devel/setup.bash // In the ME5413_Final_Project
 rospack plugins –attrib=plugin nav_core
 ```
 
-### 2.3 Install Costmap_Prohibition_Layer
+### Install Costmap_Prohibition_Layer
 
 For the ME5413_Final_Project, there are some areas which cannot be accessible or be detected by the optics sensor: the operation room and the glass wall(transparent). For these areas, we create an additional costmap to help the global planner while navigation.
 
@@ -221,7 +221,7 @@ roscd me5413_world/maps/
 rosrun map_server map_saver -f my_map map:=/map
 ```
 
-![rviz_nmapping_image](src/me5413_world/media/rviz_mapping.png)
+![rviz_nmapping_image](src/me5413_world/media/rviz_mapping.png) ![rviz_nmapping_image](src/me5413_world/media/19_Final_Project_Map.png)
 
 ### 3. Navigation
 
