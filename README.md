@@ -221,7 +221,6 @@ roscd me5413_world/maps/
 rosrun map_server map_saver -f my_map map:=/map
 ```
 
-![rviz_nmapping_image](src/me5413_world/media/rviz_mapping.png) ![rviz_nmapping_image](src/me5413_world/media/19_Final_Project_Map.png）
 <img src="src/me5413_world/media/rviz_mapping.png" alt="rviz_nmapping_image" width="400" /> <img src="src/me5413_world/media/19_Final_Project_Map.png" alt="rviz_nmapping_image" width="400" />
 
 
