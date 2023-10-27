@@ -9,7 +9,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/NUS-Advanced-Robotics-Centre/ME5413_Final_Project?color=FFE333)
 ![GitHub Repo forks](https://img.shields.io/github/forks/NUS-Advanced-Robotics-Centre/ME5413_Final_Project?color=FFE333)
 
-<img src="src/me5413_world/media/gazebo_world.jpg" width="500" height="400" /> <img src="src/me5413_world/media/Mappingplan.png" width="500" height="400" />
+<img src="src/me5413_world/media/gazebo_world.jpg" width="400" height="400" /> <img src="src/me5413_world/media/Mappingplan.png" width="500" height="400" />
 
 
 ## Dependencies
